@@ -13,3 +13,8 @@ pipenv install
 pipenv shell
 
 ```
+
+License
+-------
+
+GPL v3
