@@ -9,6 +9,7 @@ Installation
 ------------
 
 ```
+sudo apt-get install ufraw-batch imagemagick
 pipenv install
 pipenv shell
 
