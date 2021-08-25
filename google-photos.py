@@ -93,7 +93,7 @@ if __name__ == "__main__":
 		names = "richard|yingfen"
 		pictures = synology.fetch_paths_for_names(conn, names, 20)
 		synology.close_db(conn)
-		dirpath = synology.fetch_files("jeena@" + host_ip, "/var/services/homes/jeena/Drive", pictures)
+		dirpath = synology.fetch_files("jeena@" + host_ip, "/var/services/homes/jeena/Photos", pictures)
 
 	creds = get_creds()
 	gclient = login_gphoto(creds)

@@ -8,7 +8,7 @@ import os
 def connect_db(db_host, db_user, db_passwd):
 	return psycopg2.connect(
             host=db_host,
-            database="synophoto",
+            database="synofoto",
             user=db_user,
             password=db_passwd)
 
@@ -50,5 +50,5 @@ if __name__ == "__main__":
 	names = "richard|yingfen"
 	pictures = fetch_paths_for_names(conn, names, 5)
 	close_db(conn)
-	dirpath = fetch_files("jeena@" + host_ip, "/var/services/homes/jeena/Drive", pictures)
+	dirpath = fetch_files("jeena@" + host_ip, "/var/services/homes/jeena/Photos", pictures)
 	shutil.rmtree(dirpath)
