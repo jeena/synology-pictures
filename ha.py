@@ -1,20 +1,30 @@
 #!/usr/bin/env python3
 
 import synology
-# from wand.image import Image
 import os
 import shutil
+import edit
 
 def prepare_photo(i, path):
 	# sudo apt-get install ufraw-batch
 	# convert 13895032967_642e23af42_o.jpg -adaptive-resize 1920x1080\> -size 1920x1080 xc:black +swap  -gravity center -composite 01.jpg
 	# filename, file_extension = os.path.splitext(path)
-	new_path = os.path.join(os.path.dirname(path), str(i) + '.jpg')
-	cmd = 'convert "' + path + '" -adaptive-resize 1920x1080\> -size 1920x1080 xc:black +swap  -gravity center -composite ' + new_path
+	n_path = new_path(i, path)
+	cmd = 'convert "' + path + '" -adaptive-resize 1920x1080\> -size 1920x1080 xc:black +swap  -gravity center -composite ' + n_path
 	print(cmd)
 	os.system(cmd)
 	# os.rename(path, new_path)
-	return new_path
+	return n_path
+
+def new_path(i, path):
+        return os.path.join(os.path.dirname(path), str(i) + '.jpg')
+
+def resize_and_crop(i, path):
+        n_path = new_path(i, path)
+        img = edit.Image(path)
+        img.crop()
+        img.safe(n_path)
+        return n_path
 
 def upload_photo(remotepath, path):
 	cmd = 'scp ' + path + ' ' + remotepath
@@ -32,6 +42,6 @@ if __name__ == "__main__":
 
 	with os.scandir(dirpath) as dirs:
 		for i, entry in enumerate(dirs):
-			upload_photo(ha_path, prepare_photo(i, os.path.join(dirpath, entry.name)))
+			upload_photo(ha_path, resize_and_crop(i, os.path.join(dirpath, entry.name)))
 	shutil.rmtree(dirpath)
 
