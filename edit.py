@@ -66,7 +66,8 @@ class Image:
             # center zoom
             x = self.image.shape[1]/2 - self.w/2
             y = self.image.shape[0]/2 - self.h/2
-            self.image = self.image[int(y):int(y+self.h), int(x):int(x+self.w)]
+            if x > 0 and y > 0:
+                self.image = self.image[int(y):int(y+self.h), int(x):int(x+self.w)]
 
     def safe(self, new_path):
         cv2.imwrite(new_path, self.image)
