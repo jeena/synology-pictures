@@ -4,6 +4,7 @@ import psycopg2
 import tempfile
 import shutil
 import os
+import helper
 
 def connect_db(db_host, db_user, db_passwd):
 	return psycopg2.connect(
@@ -38,7 +39,7 @@ def fetch_files(remotehost, lib_path, pictures):
 	for picture in pictures:
 		remotefile = '\ '.join('/'.join([lib_path, picture[0], picture[1]]).split())
 		localfile = '/'.join([dirpath, picture[1]])
-		escaped_remotefile = remotefile.replace(" ", "\ ").replace("(", "\(").replace(")", "\)").replace("&", "\&")
+		escaped_remotefile = helper.escape_file_path(remotefile)
 		cmd = 'scp "' + remotehost + ':' + escaped_remotefile + '" "' + localfile + '"'
 		os.system(cmd)
 	return dirpath
