@@ -30,6 +30,7 @@ def dms_coordinates_to_dd_coordinates(coordinates, coordinates_ref):
 
 class Image:
     def __init__(self, path, w=1920, h=1080):
+        print("editing", path)
         self.w = w
         self.h = h
         self.path = path
@@ -43,11 +44,13 @@ class Image:
             return e
         else:
             return None
-        
+
     def get_place_name(self, e):
-        lat = str(dms_coordinates_to_dd_coordinates(e['gps_latitude'], e['gps_latitude_ref']))
-        lng = str(dms_coordinates_to_dd_coordinates(e['gps_longitude'], e['gps_longitude_ref']))
-        if lat and lng:
+        elat = e.get('gps_latitude', None)
+        elng = e.get('gps_longitude', None)
+        if elat and elng:
+            lat = str(dms_coordinates_to_dd_coordinates(elat, e['gps_latitude_ref']))
+            lng = str(dms_coordinates_to_dd_coordinates(elng, e['gps_longitude_ref']))
             location = self.geolocator.reverse(lat + ", " + lng, language="en")
             city = location.raw.get('address', {}).get('city', "")
             country = location.raw.get('address', {}).get('country', "")
@@ -107,11 +110,14 @@ class Image:
     def add_metadata(self):
         e = self.get_exif()
         if e:
-            d = datetime.strptime(e['datetime_original'], "%Y:%m:%d %H:%M:%S")
-            date = d.strftime("%Y-%m-%d %H:%M")
+            dt = e.get('datetime_original', e.get('datetime', None))
+            if dt:
+                d = datetime.strptime(dt, "%Y:%m:%d %H:%M:%S")
+                date = d.strftime("%Y-%m-%d %H:%M")
+                self.writeText(date, 2)
             place = self.get_place_name(e)
-            self.writeText(date, 2)
-            self.writeText(place, 1)
+            if place:
+                self.writeText(place, 1)
 
     def writeText(self, text, line_from_bottom):
         WHITE = (255, 255, 255)
