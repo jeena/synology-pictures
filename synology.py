@@ -5,7 +5,7 @@ import tempfile
 import shutil
 import os
 import helper
-import darktable
+from darktable import Darktable
 
 def connect_db(db_host, db_user, db_passwd):
 	return psycopg2.connect(
@@ -42,16 +42,15 @@ def fetch_files(remotehost, lib_path, pictures):
 		localfile = '/'.join([dirpath, picture[1]])
 		escaped_remotefile = helper.escape_file_path(remotefile)
 		cmd = 'scp "' + remotehost + ':' + escaped_remotefile + '" "' + localfile + '"'
-		if os.system(cmd):
+		if os.system(cmd) == 0:
                         # Get .xmp file if available
                         cmd = 'scp "' + remotehost + ':' + escaped_remotefile + '.xmp" "' + localfile + '.xmp"'
-                        if os.system(cmd):
+                        if os.system(cmd) == 0:
                                 # Use darktable
                                 d = Darktable(localfile)
                                 d.export()
                                 os.remove(localfile)
                                 os.remove(localfile + ".xmp")
-                        
 	return dirpath
 
 
