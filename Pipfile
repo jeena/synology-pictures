@@ -7,6 +7,10 @@ name = "pypi"
 google-auth-oauthlib = "*"
 psycopg2-binary = "*"
 google-api-python-client = "*"
+opencv-python = "*"
+numpy = "*"
+exif = "*"
+geopy = "*"
 
 [dev-packages]
 
