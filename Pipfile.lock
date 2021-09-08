@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "4adb8a2006b657ec935e53c94bdbbd772d4460f29ea7e062a32b5c1685cb055b"
+            "sha256": "bc276a09e3e32bf9f2527093f719e6b16d5fe0db5f59e428c282089bd8e83f86"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -39,29 +39,52 @@
             "markers": "python_version >= '3'",
             "version": "==2.0.4"
         },
-        "google-api-core": {
+        "exif": {
             "hashes": [
-                "sha256:428805de17b48ca1af2fdb5bbfc2334e1bbcb0ea4a16506fa1337fb29c8f37c8",
-                "sha256:bd9eb0709f4e10dd6fddb32fd0788a190b434426c258be6e00ef40da136d768d"
-            ],
-            "markers": "python_version >= '3.6'",
-            "version": "==2.0.0"
-        },
-        "google-api-python-client": {
-            "hashes": [
-                "sha256:6e990fc4d0419c2011f75ca5c2762efbb7eb4def67bbe2f1b98a8ccb73117bf5",
-                "sha256:a25661ec6cf4c159f41fe9c061c2bee31b2dddaf2ad787e23617048a25b53842"
+                "sha256:7a93ced12bca131b04c7e92c13a16a40685b9eb83414f9ed479d38df1c686633",
+                "sha256:d9bae4fd7737a879402dd6e5d1675e230185e1221c3df62238faf2c8f08756d4"
             ],
             "index": "pypi",
-            "version": "==2.18.0"
+            "version": "==1.3.2"
         },
-        "google-auth": {
+        "geographiclib": {
             "hashes": [
-                "sha256:c012c8be7c442c8309ca8fa0876fef33f5fd977c467be1e1c1c2f721e8ebd73c",
-                "sha256:ea1af050b3e06eb73e4470f704d23007307bc0e87c13e015f6b90460f1407bd3"
+                "sha256:8f441c527b0b8a26cd96c965565ff0513d1e4d9952b704bf449409e5015c77b7",
+                "sha256:ac400d672b8954b0306bca890b088bb8ba2a757dc8133cca0b878f34b33b2740"
+            ],
+            "version": "==1.52"
+        },
+        "geopy": {
+            "hashes": [
+                "sha256:58b7edf526b8c32e33126570b5f4fcdfaa29d4416506064777ae8d84cd103fdd",
+                "sha256:8f1f949082b964385de61fcc3a667a6a9a6e242beb1ae8972449f164b2ba0e89"
+            ],
+            "index": "pypi",
+            "version": "==2.2.0"
+        },
+        "google-api-core": {
+            "hashes": [
+                "sha256:b8ad41f72a70dd709dd13a08478936172aecf5f2d34a18ab378efa6d2d6ab575",
+                "sha256:d6760f21b3a064a8397916b33be7383fc169d1a3c3d7fae7b47eb92bba7892b8"
             ],
             "markers": "python_version >= '3.6'",
             "version": "==2.0.1"
+        },
+        "google-api-python-client": {
+            "hashes": [
+                "sha256:1f2657d1be246bc3d4bd1f0642f498653ce5fba507e6a05bbc405ed65bf10377",
+                "sha256:c89b345615188fbd525f52d59013156ad3bfd1023af27041f2dec3d7877ba112"
+            ],
+            "index": "pypi",
+            "version": "==2.19.1"
+        },
+        "google-auth": {
+            "hashes": [
+                "sha256:104475dc4d57bbae49017aea16fffbb763204fa2d6a70f1f3cc79962c1a383a4",
+                "sha256:cde472372e030e1e0bc64dac00fb53e6c095d7ab641f4281e2c995e85e205d8b"
+            ],
+            "markers": "python_version >= '3.6'",
+            "version": "==2.0.2"
         },
         "google-auth-httplib2": {
             "hashes": [
@@ -72,11 +95,11 @@
         },
         "google-auth-oauthlib": {
             "hashes": [
-                "sha256:4ab58e6c3dc6ccf112f921fcced40e5426fba266768986ea502228488276eaba",
-                "sha256:b5a1ce7c617d247ccb2dfbba9d4bfc734b41096803d854a2c52592ae80150a67"
+                "sha256:3f2a6e802eebbb6fb736a370fbf3b055edcb6b52878bf2f26330b5e041316c73",
+                "sha256:a90a072f6993f2c327067bf65270046384cda5a8ecb20b94ea9a687f1f233a7a"
             ],
             "index": "pypi",
-            "version": "==0.4.5"
+            "version": "==0.4.6"
         },
         "googleapis-common-protos": {
             "hashes": [
@@ -134,7 +157,7 @@
                 "sha256:f545c082eeb09ae678dd451a1b1dbf17babd8a0d7adea02897a76e639afca310",
                 "sha256:fde50062d67d805bc96f1a9ecc0d37bfc2a8f02b937d2c50824d186aa91f2419"
             ],
-            "markers": "python_version < '3.11' and python_version >= '3.7'",
+            "index": "pypi",
             "version": "==1.21.2"
         },
         "oauthlib": {
@@ -174,6 +197,14 @@
             ],
             "index": "pypi",
             "version": "==4.5.3.56"
+        },
+        "plum-py": {
+            "hashes": [
+                "sha256:6d0bdf7aefa10e519d2902827dee2f96a554e55f04064c978197714b26ca1ab9",
+                "sha256:b02077cda2403d9dac65db38dba072a9db751129cc7b6d569837bf7a2276fd39"
+            ],
+            "markers": "python_version >= '3.6'",
+            "version": "==0.7.0"
         },
         "protobuf": {
             "hashes": [
