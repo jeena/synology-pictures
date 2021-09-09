@@ -104,7 +104,7 @@ class Image:
             # center zoom
             x = self.image.shape[1]/2 - self.w/2
             y = self.image.shape[0]/2 - self.h/2
-            if x > 0 and y > 0:
+            if x >= 0 or y >= 0:
                 self.image = self.image[int(y):int(y+self.h), int(x):int(x+self.w)]
 
     def add_metadata(self):
@@ -131,7 +131,6 @@ class Image:
         textsize, baseline = cv2.getTextSize(text, font, font_size, font_thickness)
         x = self.image.shape[1] - textsize[0] - padding
         y = int(self.image.shape[0] - textsize[1] * line_from_bottom * line_height + baseline - padding)
-        print(baseline)
         # outline
         self.image = cv2.putText(self.image,
                                  text,
