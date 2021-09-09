@@ -52,12 +52,13 @@ class Image:
             lat = str(dms_coordinates_to_dd_coordinates(elat, e['gps_latitude_ref']))
             lng = str(dms_coordinates_to_dd_coordinates(elng, e['gps_longitude_ref']))
             location = self.geolocator.reverse(lat + ", " + lng, language="en")
-            city = location.raw.get('address', {}).get('city', "")
-            country = location.raw.get('address', {}).get('country', "")
-            name = ", ".join((city, country))
-            return name
-        else:
-            return ""
+            if location:
+                city = location.raw.get('address', {}).get('city', None)
+                country = location.raw.get('address', {}).get('country', None)
+                name = ", ".join(list(filter(lambda x: x, [city, country])))
+                if name != "":
+                    return name
+        return None
 
     def crop(self):
         oh, ow, z = self.image.shape
@@ -110,14 +111,18 @@ class Image:
     def add_metadata(self):
         e = self.get_exif()
         if e:
+            line = 1
             dt = e.get('datetime_original', e.get('datetime', None))
+            place = self.get_place_name(e)
+            if place:
+                self.writeText(place, line)
+                line += 1
             if dt:
                 d = datetime.strptime(dt, "%Y:%m:%d %H:%M:%S")
                 date = d.strftime("%Y-%m-%d %H:%M")
-                self.writeText(date, 2)
-            place = self.get_place_name(e)
-            if place:
-                self.writeText(place, 1)
+                self.writeText(date, line)
+                line += 1
+
 
     def writeText(self, text, line_from_bottom):
         WHITE = (255, 255, 255)
@@ -127,7 +132,7 @@ class Image:
         font_color = BLACK
         font_thickness = 4
         line_height = 1.2
-        padding = 20
+        padding = 50
         textsize, baseline = cv2.getTextSize(text, font, font_size, font_thickness)
         x = self.image.shape[1] - textsize[0] - padding
         y = int(self.image.shape[0] - textsize[1] * line_from_bottom * line_height + baseline - padding)
