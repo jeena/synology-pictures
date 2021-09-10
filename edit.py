@@ -92,12 +92,9 @@ class Image:
         if vertical:
             self.image = cv2.resize(self.image, (int(w), int(h)))
             self.image = self.image[0:self.h, 0:self.w]
-            bg_image = cv2.resize(self.image.copy(), (self.w, self.h))
-            # make darker 
-            bg_image = cv2.add(bg_image, np.array([-25.0]))
-            bg_image = cv2.blur(bg_image, (200, 200))
             x_offset = int(self.w / 2 - self.image.shape[1] / 2)
-            y_offset = 0
+            y_offset = int(self.h / 2 - self.image.shape[0] / 2)
+            bg_image = self.blurry_bg(self.image)
             bg_image[y_offset:y_offset+self.image.shape[0], x_offset:x_offset+self.image.shape[1]] = self.image
             self.image = bg_image
         else:
@@ -105,9 +102,25 @@ class Image:
             # center zoom
             x = self.image.shape[1]/2 - self.w/2
             y = self.image.shape[0]/2 - self.h/2
-            if x >= 0 or y >= 0:
+            print (x,y)
+            if x >= 0 and y >= 0:
                 self.image = self.image[int(y):int(y+self.h), int(x):int(x+self.w)]
-
+            else:
+                self.image = self.image[0:self.h, 0:self.w]
+                bg_image = self.blurry_bg(self.image)
+                x_offset = int(self.w / 2 - self.image.shape[1] / 2)
+                y_offset = int(self.h / 2 - self.image.shape[0] / 2)
+                bg_image[y_offset:y_offset+self.image.shape[0], x_offset:x_offset+self.image.shape[1]] = self.image
+                self.image = bg_image          
+                
+    def blurry_bg(self, image):
+        bg_image = cv2.resize(image.copy(), (self.w, self.h))
+        # make darker 
+        bg_image = cv2.add(bg_image, np.array([-25.0]))
+        bg_image = cv2.blur(bg_image, (200, 200))
+        return bg_image
+            
+    
     def add_metadata(self):
         e = self.get_exif()
         if e:
