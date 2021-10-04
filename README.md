@@ -9,7 +9,7 @@ Installation
 ------------
 
 ```
-sudo apt-get install ufraw-batch imagemagick
+sudo apt-get install ufraw-batch imagemagick libheif-examples
 pipenv install
 pipenv shell
 
