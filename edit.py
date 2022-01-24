@@ -29,7 +29,7 @@ def dms_coordinates_to_dd_coordinates(coordinates, coordinates_ref):
     return decimal_degrees
 
 class Image:
-    def __init__(self, path, w=1920, h=1080):
+    def __init__(self, path, w=3840, h=2160):
         print("editing", path)
         self.w = w
         self.h = h
@@ -111,16 +111,15 @@ class Image:
                 x_offset = int(self.w / 2 - self.image.shape[1] / 2)
                 y_offset = int(self.h / 2 - self.image.shape[0] / 2)
                 bg_image[y_offset:y_offset+self.image.shape[0], x_offset:x_offset+self.image.shape[1]] = self.image
-                self.image = bg_image          
-                
+                self.image = bg_image
+
     def blurry_bg(self, image):
         bg_image = cv2.resize(image.copy(), (self.w, self.h))
-        # make darker 
+        # make darker
         bg_image = cv2.add(bg_image, np.array([-25.0]))
         bg_image = cv2.blur(bg_image, (200, 200))
         return bg_image
-            
-    
+
     def add_metadata(self):
         e = self.get_exif()
         if e:
