@@ -25,7 +25,7 @@ if __name__ == "__main__":
 	ha_path = "root@bundang.swierczyniec.info:/media/Synology"
 	host_ip = os.getenv('DB_HOST')
 	conn = synology.connect_db(host_ip, os.getenv('DB_USER'), os.getenv('DB_PASSWD'))
-	names = "kaylee"
+	names = "richard|kaylee"
 	pictures = synology.fetch_paths_for_names(conn, names, 20)
 	synology.close_db(conn)
 	dirpath = synology.fetch_files("jeena@" + host_ip, "/var/services/homes/", pictures)
