@@ -6,6 +6,8 @@ import numpy as np
 import exif
 from geopy.geocoders import Nominatim
 from datetime import datetime
+import pathlib
+from heic2jpeg import heic2jpeg
 
 def wait_with_check_closing(win_name):
     """ 
@@ -33,6 +35,9 @@ class Image:
         print("editing", path)
         self.w = w
         self.h = h
+        if pathlib.Path(path).suffix.lower() == ".heic":
+            h2j = heic2jpeg.Heic2Jpeg(path)
+            path = h2j.safe()
         self.path = path
         self.image = cv2.imread(self.path)
         self.geolocator = Nominatim(user_agent="jeena-synology-pictures")

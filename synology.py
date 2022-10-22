@@ -19,10 +19,11 @@ def close_db(conn):
 
 def fetch_paths_for_names(conn, names, limit=20):
 	sql_query = """
-SELECT folder.name, unit.filename
+SELECT folder.name, unit.filename, user_info.name AS user
 FROM unit
     LEFT OUTER JOIN face ON face.ref_id_unit = unit.id
     LEFT OUTER JOIN folder ON folder.id = unit.id_folder
+    LEFT OUTER JOIN user_info ON user_info.id = unit.id_user
 WHERE
     face.id_person in (SELECT id FROM person WHERE lower(name) SIMILAR TO %s)
 ORDER BY random()
@@ -35,16 +36,25 @@ LIMIT %s;
 
 	return pictures
 
-def fetch_files(remotehost, lib_path, pictures):
+def fetch_files(remotehost, pictures):
 	dirpath = tempfile.mkdtemp()
 	for picture in pictures:
-		remotefile = '\ '.join('/'.join([lib_path, picture[0], picture[1]]).split())
-		localfile = '/'.join([dirpath, picture[1]])
+		# /var/services/homes/kaylee/Photos/MobileBackup/iPhone/2018/09/IMG_20180908_094627.HEIC
+		# /volume1/photo/jeena/William/Pictures/Photos/Moments/Mobile/SM-N986B/DCIM/Camera/20210924_122532.jpg
+		path = picture[0]
+		name = picture[1]
+		user = picture[2]
+		if user == '/volume1/photo':
+			lib_path = "/photo"
+		else:
+			lib_path = "/homes/" + user + "/Photos"
+		remotefile = '\ '.join('/'.join([lib_path, path, name]).split())
+		localfile = '/'.join([dirpath, name])
 		escaped_remotefile = helper.escape_file_path(remotefile)
-		cmd = 'scp "' + remotehost + ':' + escaped_remotefile + '" "' + localfile + '"'
+		cmd = 'scp -P 23 "' + remotehost + ':' + escaped_remotefile + '" "' + localfile + '"'
 		if os.system(cmd) == 0:
                         # Get .xmp file if available
-                        cmd = 'scp "' + remotehost + ':' + escaped_remotefile + '.xmp" "' + localfile + '.xmp"'
+                        cmd = 'scp -P 23 "' + remotehost + ':' + escaped_remotefile + '.xmp" "' + localfile + '.xmp"'
                         if os.system(cmd) == 0:
                                 # Use darktable
                                 d = Darktable(localfile)
@@ -60,5 +70,5 @@ if __name__ == "__main__":
 	names = "richard|yingfen"
 	pictures = fetch_paths_for_names(conn, names, 5)
 	close_db(conn)
-	dirpath = fetch_files("jeena@" + host_ip, "/var/services/homes/jeena/Photos", pictures)
+	dirpath = fetch_files("jeena@" + host_ip, pictures)
 	shutil.rmtree(dirpath)

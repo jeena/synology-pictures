@@ -15,20 +15,22 @@ def resize_and_crop(i, path):
         img.add_metadata()
         img.safe(n_path)
         return n_path
+        
 
 def upload_photo(remotepath, path):
 	cmd = 'scp ' + path + ' ' + remotepath
+	print(cmd)
 	os.system(cmd)
 
 if __name__ == "__main__":
 	ha_path = os.getenv('HA_PATH')
-	ha_path = "root@bundang.swierczyniec.info:/media/Synology"
-	host_ip = os.getenv('DB_HOST')
-	conn = synology.connect_db(host_ip, os.getenv('DB_USER'), os.getenv('DB_PASSWD'))
-	names = "richard|yingfen|kaylee"
+	sy_host = os.getenv('SY_DB_HOST')
+	sy_user = os.getenv('SY_USER')
+	conn = synology.connect_db(sy_host, os.getenv('SY_DB_USER'), os.getenv('SY_DB_PASSWD'))
+	names = os.getenv('SY_SEARCH')
 	pictures = synology.fetch_paths_for_names(conn, names, 20)
 	synology.close_db(conn)
-	dirpath = synology.fetch_files("jeena@" + host_ip, "/var/services/homes/jeena/Photos", pictures)
+	dirpath = synology.fetch_files(sy_user + "@" + sy_host, pictures)
 
 	with os.scandir(dirpath) as dirs:
 		for i, entry in enumerate(dirs):

@@ -1,5 +1,4 @@
 #!/bin/bash
 
-PATH=/home/jeena/.local/bin/:$PATH
-cd /home/jeena/Projects/synology-pictures/
+PATH=$HOME/.local/bin/:$PATH
 pipenv run python3 ha.py
