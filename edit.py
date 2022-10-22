@@ -31,7 +31,7 @@ def dms_coordinates_to_dd_coordinates(coordinates, coordinates_ref):
     return decimal_degrees
 
 class Image:
-    def __init__(self, path, w=1920, h=1080):
+    def __init__(self, path, w=3840, h=2160):
         print("editing", path)
         self.w = w
         self.h = h
