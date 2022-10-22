@@ -9,13 +9,9 @@ Installation
 ------------
 
 ```
-sudo apt-get install ufraw-batch imagemagick
-git submodule update --init --recursive
+sudo apt-get install ufraw-batch imagemagick libheif-examples
 pipenv install
 pipenv shell
-cd heic2jpeg
-pipenv install
-cd ..
 ```
 
 License

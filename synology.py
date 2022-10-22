@@ -53,9 +53,16 @@ def fetch_files(remotehost, pictures):
 		escaped_remotefile = helper.escape_file_path(remotefile)
 		cmd = 'scp -P 23 "' + remotehost + ':' + escaped_remotefile + '" "' + localfile + '"'
 		if os.system(cmd) == 0:
+			(p, e) = os.path.splitext(localfile)
+			if e == ".HEIC":
+				old_localfile = localfile
+				localfile = old_localfile + ".jpg"
+				cmd = 'heif-convert "' + old_localfile + '"  "' + localfile + '"'
+				os.system(cmd)
+				os.remove(old_localfile)
                         # Get .xmp file if available
-                        cmd = 'scp -P 23 "' + remotehost + ':' + escaped_remotefile + '.xmp" "' + localfile + '.xmp"'
-                        if os.system(cmd) == 0:
+			cmd = 'scp -P 23 "' + remotehost + ':' + escaped_remotefile + '.xmp" "' + localfile + '.xmp"'
+			if os.system(cmd) == 0:
                                 # Use darktable
                                 d = Darktable(localfile)
                                 d.export()
