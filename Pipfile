@@ -11,12 +11,11 @@ opencv-python = "*"
 numpy = "*"
 exif = "*"
 geopy = "*"
-python-matrixbot = "*"
-
 pyheif = "*"
 Pillow = "*"
 piexif = "*"
 exifread = "*"
+matrix-commander = "*"
 
 [dev-packages]
 

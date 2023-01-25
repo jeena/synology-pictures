@@ -7,6 +7,7 @@ import exif
 from geopy.geocoders import Nominatim
 from datetime import datetime
 import pathlib
+import os
 
 def wait_with_check_closing(win_name):
     """ 
@@ -60,6 +61,19 @@ class Image:
                 if name != "":
                     return name
         return None
+        
+    def get_takentime(self):
+        e = self.get_exif()
+        date = e.get('datetime_original')
+        if date == None:
+            date = e.get('datetime')
+        if date == None:
+            date = e.get('datetime_digitized')
+        if date == None:
+            date = e.get('gps_datestamp')
+        if date == None:
+            date = os.path.basename(self.path)
+        return date
 
     def crop(self):
         oh, ow, z = self.image.shape
