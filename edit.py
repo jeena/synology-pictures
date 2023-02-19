@@ -64,7 +64,11 @@ class Image:
         
     def get_takentime(self):
         e = self.get_exif()
-        date = e.get('datetime_original')
+        date = None
+        if e == None:
+            date = os.path.basename(self.path)
+        if date == None:
+            date = e.get('datetime_original')
         if date == None:
             date = e.get('datetime')
         if date == None:
@@ -201,7 +205,8 @@ if __name__ == "__main__":
     else:
         img_path = sys.argv[1]
         img = Image(img_path)
+        img.get_takentime()
         img.crop()
         img.add_metadata()
-        img.show()
+        #img.show()
         img.safe("/home/jeena/Downloads/test.jpg")

@@ -1,0 +1,8 @@
+[Unit] 
+Description=Synology Pictures on TV
+
+[Service] 
+User=jeena
+Type=simple 
+WorkingDirectory=/home/jeena/Projects/synology-pictures/
+ExecStart=/home/jeena/Projects/synology-pictures/run.sh

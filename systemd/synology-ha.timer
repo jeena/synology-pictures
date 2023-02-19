@@ -1,0 +1,8 @@
+[Unit]
+Description=Run Synology Photos on TV hourly
+
+[Timer]
+OnCalendar=*-*-* *:00:00
+
+[Install]
+WantedBy=timers.target
