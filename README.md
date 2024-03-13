@@ -19,9 +19,11 @@ Open postgresql port on Synology
 
 Taken from https://www.youtube.com/watch?v=MqJuKu38BsA
 
+x.x.x.x should be your IP where the script runs
+
 ```
-echo "host all all 192.168.1.1/24 trust" >> /etc/postgresql/pg_hba.conf
-sed -i /listen_addresses = '127.0.0.1'/listen_addresses = '*'/ /etc/pastgresql/postgresql.conf
+echo "host all all x.x.x.x/24 trust" >> /etc/postgresql/pg_hba.conf
+sed -i /listen_addresses = '127.0.0.1'/listen_addresses = '*'/ /etc/postgresql/postgresql.conf
 ```
 
 License
